@@ -36,46 +36,62 @@ namespace AdventOfCode2021.Day05 {
         }
 
         public List<Point> GetPointsCovered() {
-            List<Point> pointsCovered = new();
             if (IsHorizontal()) {
-                int largerX = Math.Max(Points[0].X, Points[1].X);
-                int smallerX = Math.Min(Points[0].X, Points[1].X);
-                int Y = Points[0].Y;
-                for (int i = smallerX; i <= largerX; i++) {
-                    Point p = new(i, Y);
-                    pointsCovered.Add(p);
-                }
+                return GetPointsCoveredHorizontal();
             }
             else if (IsVertical()) {
-                int largerY = Math.Max(Points[0].Y, Points[1].Y);
-                int smallerY = Math.Min(Points[0].Y, Points[1].Y);
-
-                int X = Points[0].X;
-                for (int i = smallerY; i <= largerY; i++) {
-                    Point p = new(X, i);
-                    pointsCovered.Add(p);
-                }
+                return GetPointsCoveredVertical();
             }
             else {
-                // is Diagonal
-                // we can pick X or Y, I'm picking Y
+                return GetPointsCoveredDiagonal();
+            }
+        }
 
-                (var pointSmallerY, var pointLargerY) = GetPointsInYOrder();
+        private List<Point> GetPointsCoveredHorizontal() {
+            List<Point> pointsCovered = new();
+            int largerX = Math.Max(Points[0].X, Points[1].X);
+            int smallerX = Math.Min(Points[0].X, Points[1].X);
+            int y = Points[0].Y;
+            for (int i = smallerX; i <= largerX; i++) {
+                Point p = new(i, y);
+                pointsCovered.Add(p);
+            }
+            return pointsCovered;
+        }
 
-                int x1 = pointSmallerY.X;
-                int x2 = pointLargerY.X;
+        private List<Point> GetPointsCoveredVertical() {
+            List<Point> pointsCovered = new();
+            int largerY = Math.Max(Points[0].Y, Points[1].Y);
+            int smallerY = Math.Min(Points[0].Y, Points[1].Y);
+            int x = Points[0].X;
+            for (int i = smallerY; i <= largerY; i++) {
+                Point p = new(x, i);
+                pointsCovered.Add(p);
+            }
+            return pointsCovered;
+        }
 
-                int smallerY = pointSmallerY.Y;
-                int largerY = pointLargerY.Y;
+        private List<Point> GetPointsCoveredDiagonal() {
+            List<Point> pointsCovered = new();
 
-                int x = x1;
-                for (int y = smallerY; y <= largerY; y++) {
-                    Point p = new(x, y);
-                    pointsCovered.Add(p);
-                    if (x2 > x1) { x++; }
-                    else { x--; }
-                }
+            // Pick a point to start on: we can start w/either the smaller X or Y
+            // I'm choosing Y: move from Point1 (w/smaller Y) to Point2 (w/larger Y).
+            (var pointSmallerY, var pointLargerY) = GetPointsInYOrder();
 
+            int smallerY = pointSmallerY.Y;
+            int largerY = pointLargerY.Y;
+
+            // x is either incremented or decremented depending on the relative x 
+            // values of Point1 and Point2
+            int x1 = pointSmallerY.X;
+            int x2 = pointLargerY.X;
+            int x = x1;
+
+            for (int y = smallerY; y <= largerY; y++) {
+                Point p = new(x, y);
+                pointsCovered.Add(p);
+                if (x2 > x1) { x++; }
+                else { x--; }
             }
             return pointsCovered;
         }
