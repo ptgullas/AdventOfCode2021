@@ -24,11 +24,11 @@ namespace AdventOfCode2021.Day05 {
         }
 
         public bool IsHorizontal() {
-            return Coordinates[0].X == Coordinates[1].X;
+            return Coordinates[0].Y == Coordinates[1].Y;
         }
 
         public bool IsVertical() {
-            return Coordinates[0].Y == Coordinates[1].Y;
+            return Coordinates[0].X == Coordinates[1].X;
         }
 
     }
