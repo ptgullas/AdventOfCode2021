@@ -36,15 +36,9 @@ namespace AdventOfCode2021.Day05 {
         }
 
         public List<Point> GetPointsCovered() {
-            if (IsHorizontal()) {
-                return GetPointsCoveredHorizontal();
-            }
-            else if (IsVertical()) {
-                return GetPointsCoveredVertical();
-            }
-            else {
-                return GetPointsCoveredDiagonal();
-            }
+            if (IsHorizontal()) { return GetPointsCoveredHorizontal(); }
+            else if (IsVertical()) { return GetPointsCoveredVertical(); }
+            else { return GetPointsCoveredDiagonal(); }
         }
 
         private List<Point> GetPointsCoveredHorizontal() {

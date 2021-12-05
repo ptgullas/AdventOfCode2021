@@ -22,8 +22,6 @@ namespace AdventOfCode2021.Day05 {
             }
         }
 
-
-
         public void AddVent(Point point) {
             // if it's already in DangerousVents, do nothing
             if (DangerousVents.TryGetValue((point.X, point.Y), out Point _)) { }
