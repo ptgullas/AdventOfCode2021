@@ -24,18 +24,18 @@ namespace AdventOfCode2021.Day05 {
 
 
 
-        public void AddVent(Point coordinate) {
+        public void AddVent(Point point) {
             // if it's already in DangerousVents, do nothing
-            if (DangerousVents.TryGetValue((coordinate.X, coordinate.Y), out Point _)) { }
+            if (DangerousVents.TryGetValue((point.X, point.Y), out Point _)) { }
             // else if it's already in Vents, add to DangerousVents
-            else if (Vents.TryGetValue((coordinate.X, coordinate.Y), out Point _)) { DangerousVents.Add((coordinate.X, coordinate.Y), coordinate); }
+            else if (Vents.TryGetValue((point.X, point.Y), out Point _)) { DangerousVents.Add((point.X, point.Y), point); }
             // else add to Vents
-            else { Vents.Add((coordinate.X, coordinate.Y), coordinate); }
+            else { Vents.Add((point.X, point.Y), point); }
         }
 
-        public void AddVents(List<Point> coordinates) {
-            foreach (Point c in coordinates) {
-                AddVent(c);
+        public void AddVents(List<Point> points) {
+            foreach (Point p in points) {
+                AddVent(p);
             }
         }
 
