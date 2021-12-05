@@ -21,7 +21,7 @@ namespace AdventOfCode2021.Day05 {
 
             int dangerousCount = ventMap.FindDangerousPointCount();
             Console.WriteLine($"There are {dangerousCount} dangerous points!");
-
+            Console.WriteLine($"THere are {ventMap.FindTotalPointCount()} total points.");
         }
     }
 }

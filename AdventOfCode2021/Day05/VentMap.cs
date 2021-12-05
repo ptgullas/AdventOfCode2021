@@ -42,5 +42,9 @@ namespace AdventOfCode2021.Day05 {
         public int FindDangerousPointCount() {
             return DangerousVents.Count;
         }
+
+        public int FindTotalPointCount() {
+            return Vents.Count;
+        }
     }
 }
