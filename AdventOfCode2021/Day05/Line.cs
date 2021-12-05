@@ -15,7 +15,7 @@ namespace AdventOfCode2021.Day05 {
         public Line(string inputString) {
             var hyphenPos = inputString.IndexOf('-');
             Coordinate c1 = new(inputString.Substring(0, hyphenPos - 1));
-            Coordinate c2 = new(inputString.Substring(hyphenPos + 3));
+            Coordinate c2 = new(inputString[(hyphenPos + 3)..]);
             Coordinates = new Coordinate[2] { c1, c2 };
         }
 
@@ -59,19 +59,38 @@ namespace AdventOfCode2021.Day05 {
             else {
                 // is Diagonal
                 // we can pick X or Y, I'm picking Y
-                int largerY = Math.Max(Coordinates[0].Y, Coordinates[1].Y);
-                int smallerY = Math.Min(Coordinates[0].Y, Coordinates[1].Y);
 
-                int x = Math.Min(Coordinates[0].X, Coordinates[1].X);
+                var pointSmallerY = GetCoordinateWithSmallerY();
+                var pointLargerY = GetCoordinateWithLargerY();
+
+                int x1 = pointSmallerY.X;
+                int x2 = pointLargerY.X;
+
+                int smallerY = pointSmallerY.Y;
+                int largerY = pointLargerY.Y;
+
+                int x = x1;
                 for (int y = smallerY; y <= largerY; y++) {
                     Coordinate c = new(x, y);
                     pointsCovered.Add(c);
-                    x++;
+                    if (x2 > x1) { x++; }
+                    else { x--; }
                 }
 
             }
             return pointsCovered;
         }
+
+        private Coordinate GetCoordinateWithSmallerY() {
+            if (Coordinates[0].Y < Coordinates[1].Y) { return Coordinates[0]; }
+            else { return Coordinates[1]; }
+        }
+
+        private Coordinate GetCoordinateWithLargerY() {
+            if (Coordinates[0].Y > Coordinates[1].Y) { return Coordinates[0]; }
+            else { return Coordinates[1]; }
+        }
+
 
     }
 }
