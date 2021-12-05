@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day05 {
     public class Line {
-        public Coordinate[] Coordinates { get; set; }
+        public Point[] Points { get; set; }
 
-        public Line(Coordinate c1, Coordinate c2) {
-            Coordinates = new Coordinate[2] { c1, c2 };
+        public Line(Point p1, Point p2) {
+            Points = new Point[2] { p1, p2 };
         }
 
         public Line(string inputString) {
             var hyphenPos = inputString.IndexOf('-');
-            Coordinate c1 = new(inputString.Substring(0, hyphenPos - 1));
-            Coordinate c2 = new(inputString[(hyphenPos + 3)..]);
-            Coordinates = new Coordinate[2] { c1, c2 };
+            Point p1 = new(inputString.Substring(0, hyphenPos - 1));
+            Point p2 = new(inputString[(hyphenPos + 3)..]);
+            Points = new Point[2] { p1, p2 };
         }
 
         public override string ToString() {
-            return $"{Coordinates[0].X}, {Coordinates[0].Y} -> {Coordinates[1].X}, {Coordinates[1].Y}";
+            return $"{Points[0].X}, {Points[0].Y} -> {Points[1].X}, {Points[1].Y}";
         }
 
         public bool IsHorizontalOrVertical() {
@@ -28,40 +28,39 @@ namespace AdventOfCode2021.Day05 {
         }
 
         public bool IsHorizontal() {
-            return Coordinates[0].Y == Coordinates[1].Y;
+            return Points[0].Y == Points[1].Y;
         }
 
         public bool IsVertical() {
-            return Coordinates[0].X == Coordinates[1].X;
+            return Points[0].X == Points[1].X;
         }
 
-        public List<Coordinate> GetPointsCovered() {
-            List<Coordinate> pointsCovered = new();
+        public List<Point> GetPointsCovered() {
+            List<Point> pointsCovered = new();
             if (IsHorizontal()) {
-                int largerX = Math.Max(Coordinates[0].X, Coordinates[1].X);
-                int smallerX = Math.Min(Coordinates[0].X, Coordinates[1].X);
-                int Y = Coordinates[0].Y;
+                int largerX = Math.Max(Points[0].X, Points[1].X);
+                int smallerX = Math.Min(Points[0].X, Points[1].X);
+                int Y = Points[0].Y;
                 for (int i = smallerX; i <= largerX; i++) {
-                    Coordinate c = new(i, Y);
-                    pointsCovered.Add(c);
+                    Point p = new(i, Y);
+                    pointsCovered.Add(p);
                 }
             }
             else if (IsVertical()) {
-                int largerY = Math.Max(Coordinates[0].Y, Coordinates[1].Y);
-                int smallerY = Math.Min(Coordinates[0].Y, Coordinates[1].Y);
+                int largerY = Math.Max(Points[0].Y, Points[1].Y);
+                int smallerY = Math.Min(Points[0].Y, Points[1].Y);
 
-                int X = Coordinates[0].X;
+                int X = Points[0].X;
                 for (int i = smallerY; i <= largerY; i++) {
-                    Coordinate c = new(X, i);
-                    pointsCovered.Add(c);
+                    Point p = new(X, i);
+                    pointsCovered.Add(p);
                 }
             }
             else {
                 // is Diagonal
                 // we can pick X or Y, I'm picking Y
 
-                var pointSmallerY = GetCoordinateWithSmallerY();
-                var pointLargerY = GetCoordinateWithLargerY();
+                (var pointSmallerY, var pointLargerY) = GetPointsInYOrder();
 
                 int x1 = pointSmallerY.X;
                 int x2 = pointLargerY.X;
@@ -71,8 +70,8 @@ namespace AdventOfCode2021.Day05 {
 
                 int x = x1;
                 for (int y = smallerY; y <= largerY; y++) {
-                    Coordinate c = new(x, y);
-                    pointsCovered.Add(c);
+                    Point p = new(x, y);
+                    pointsCovered.Add(p);
                     if (x2 > x1) { x++; }
                     else { x--; }
                 }
@@ -81,16 +80,9 @@ namespace AdventOfCode2021.Day05 {
             return pointsCovered;
         }
 
-        private Coordinate GetCoordinateWithSmallerY() {
-            if (Coordinates[0].Y < Coordinates[1].Y) { return Coordinates[0]; }
-            else { return Coordinates[1]; }
+        private (Point, Point) GetPointsInYOrder() {
+            if (Points[0].Y < Points[1].Y) { return (Points[0], Points[1]); }
+            else { return (Points[1], Points[0]);  }
         }
-
-        private Coordinate GetCoordinateWithLargerY() {
-            if (Coordinates[0].Y > Coordinates[1].Y) { return Coordinates[0]; }
-            else { return Coordinates[1]; }
-        }
-
-
     }
 }

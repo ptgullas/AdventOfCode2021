@@ -8,18 +8,18 @@ using AdventOfCode2021.Shared;
 using Xunit;
 
 namespace AdventOfCode2021.Tests.Day05Tests {
-    public class CoordinateTests {
+    public class PointTests {
 
         [Fact]
         public void Constructor_UnsplitString_Passes() {
-            string coordinatesUnsplit = "476,38";
+            string pointsUnsplit = "476,38";
             int expectedX = 476;
             int expectedY = 38;
 
-            Coordinate coordinate = new(coordinatesUnsplit);
+            Point point = new(pointsUnsplit);
 
-            Assert.Equal(expectedX, coordinate.X);
-            Assert.Equal(expectedY, coordinate.Y);
+            Assert.Equal(expectedX, point.X);
+            Assert.Equal(expectedY, point.Y);
         }
     }
 }

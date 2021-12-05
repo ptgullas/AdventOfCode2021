@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day05 {
     public class VentMap {
-        public Dictionary<(int,int), Coordinate> Vents { get; set; }
-        public Dictionary<(int,int), Coordinate> DangerousVents { get; set; }
+        public Dictionary<(int,int), Point> Vents { get; set; }
+        public Dictionary<(int,int), Point> DangerousVents { get; set; }
 
         public VentMap() {
             Vents = new();
@@ -24,17 +24,17 @@ namespace AdventOfCode2021.Day05 {
 
 
 
-        public void AddVent(Coordinate coordinate) {
+        public void AddVent(Point coordinate) {
             // if it's already in DangerousVents, do nothing
-            if (DangerousVents.TryGetValue((coordinate.X, coordinate.Y), out Coordinate _)) { }
+            if (DangerousVents.TryGetValue((coordinate.X, coordinate.Y), out Point _)) { }
             // else if it's already in Vents, add to DangerousVents
-            else if (Vents.TryGetValue((coordinate.X, coordinate.Y), out Coordinate _)) { DangerousVents.Add((coordinate.X, coordinate.Y), coordinate); }
+            else if (Vents.TryGetValue((coordinate.X, coordinate.Y), out Point _)) { DangerousVents.Add((coordinate.X, coordinate.Y), coordinate); }
             // else add to Vents
             else { Vents.Add((coordinate.X, coordinate.Y), coordinate); }
         }
 
-        public void AddVents(List<Coordinate> coordinates) {
-            foreach (Coordinate c in coordinates) {
+        public void AddVents(List<Point> coordinates) {
+            foreach (Point c in coordinates) {
                 AddVent(c);
             }
         }
