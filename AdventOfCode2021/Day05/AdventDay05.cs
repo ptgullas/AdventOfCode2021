@@ -10,6 +10,15 @@ namespace AdventOfCode2021.Day05 {
         public static void Run() {
             string filePath = @"..\AdventOfCode2021\input\day05_input.txt";
             var inputStrings = AdventUtils.ReadFileAsStringList(filePath);
+            List<Line> lines = new();
+            foreach (string str in inputStrings) {
+                lines.Add(new Line(str));
+            }
+            Console.WriteLine("Creating ventMap");
+            VentMap ventMap = new(lines);
+
+            int dangerousCount = ventMap.FindDangerousPointCount();
+            Console.WriteLine($"There are {dangerousCount} dangerous points!");
 
         }
     }

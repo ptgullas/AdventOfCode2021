@@ -19,6 +19,10 @@ namespace AdventOfCode2021.Day05 {
             Coordinates = new Coordinate[2] { c1, c2 };
         }
 
+        public override string ToString() {
+            return $"{Coordinates[0].X}, {Coordinates[0].Y} -> {Coordinates[1].X}, {Coordinates[1].Y}";
+        }
+
         public bool IsHorizontalOrVertical() {
             return IsHorizontal() || IsVertical();
         }
@@ -51,6 +55,20 @@ namespace AdventOfCode2021.Day05 {
                     Coordinate c = new(X, i);
                     pointsCovered.Add(c);
                 }
+            }
+            else {
+                // is Diagonal
+                // we can pick X or Y, I'm picking Y
+                int largerY = Math.Max(Coordinates[0].Y, Coordinates[1].Y);
+                int smallerY = Math.Min(Coordinates[0].Y, Coordinates[1].Y);
+
+                int x = Math.Min(Coordinates[0].X, Coordinates[1].X);
+                for (int y = smallerY; y <= largerY; y++) {
+                    Coordinate c = new(x, y);
+                    pointsCovered.Add(c);
+                    x++;
+                }
+
             }
             return pointsCovered;
         }

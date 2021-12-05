@@ -63,7 +63,28 @@ namespace AdventOfCode2021.Tests.Day05Tests {
             Assert.Contains<Coordinate>(expectedPoint1, points);
             Assert.Contains<Coordinate>(expectedPoint2, points);
             Assert.Contains<Coordinate>(expectedPoint3, points);
+        }
 
+        [Fact]
+        public void GetPointsCovered_Diagonal_Passes() {
+            string inputStr = "6,4 -> 2,0";
+            int expectedPointCount = 5;
+            Coordinate expectedPoint1 = new(2, 0);
+            Coordinate expectedPoint2 = new(3, 1);
+            Coordinate expectedPoint3 = new(4, 2);
+            Coordinate expectedPoint4 = new(5, 3);
+            Coordinate expectedPoint5 = new(6, 4);
+
+
+            Line line = new(inputStr);
+            var points = line.GetPointsCovered();
+
+            Assert.Equal(expectedPointCount, points.Count);
+            Assert.Contains<Coordinate>(expectedPoint1, points);
+            Assert.Contains<Coordinate>(expectedPoint2, points);
+            Assert.Contains<Coordinate>(expectedPoint3, points);
+            Assert.Contains<Coordinate>(expectedPoint4, points);
+            Assert.Contains<Coordinate>(expectedPoint5, points);
         }
     }
 }
