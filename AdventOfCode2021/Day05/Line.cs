@@ -18,5 +18,18 @@ namespace AdventOfCode2021.Day05 {
             Coordinate c2 = new(inputString.Substring(hyphenPos + 3));
             Coordinates = new Coordinate[2] { c1, c2 };
         }
+
+        public bool IsHorizontalOrVertical() {
+            return IsHorizontal() || IsVertical();
+        }
+
+        public bool IsHorizontal() {
+            return Coordinates[0].X == Coordinates[1].X;
+        }
+
+        public bool IsVertical() {
+            return Coordinates[0].Y == Coordinates[1].Y;
+        }
+
     }
 }
