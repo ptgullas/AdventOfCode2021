@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day05 {
     public class VentMap {
-        public List<Coordinate> Vents { get; set; }
-        public List<Coordinate> DangerousVents { get; set; }
+        public Dictionary<(int,int), Coordinate> Vents { get; set; }
+        public Dictionary<(int, int), Coordinate> DangerousVents { get; set; }
         public List<Line> Lines { get; set; }
 
         public VentMap() {
@@ -20,33 +20,18 @@ namespace AdventOfCode2021.Day05 {
             DangerousVents = new();
             Lines = lines;
             foreach (Line l in lines) {
-                if (l.IsHorizontalOrVertical()) {
-                    var points = l.GetPointsCovered();
-                    Console.WriteLine($"line {l} has {points.Count} points");
-                    AddVents(points);
-                }
+                var points = l.GetPointsCovered();
+                Console.WriteLine($"line {l} has {points.Count} points");
+                AddVents(points);
             }
         }
-        /*
-        public void AddVent(Coordinate coordinate) {
-            var existingVent = Vents.FirstOrDefault(v => v.Coordinate == coordinate);
-            if (existingVent is not null) { 
-                existingVent.Increment();
-                // Console.WriteLine($"Incremented existing vent at {existingVent.Coordinate.X}, {existingVent.Coordinate.Y}");
-            }
-            else { 
-                Vents.Add(new Vent(coordinate));
-                // Console.WriteLine($"Added new vent at {coordinate.X}, {coordinate.Y}");
-            }
-            // Console.WriteLine($"Vent count is at {Vents.Count}");
-        }
-        */
 
         public void AddVent(Coordinate coordinate) {
-            if (DangerousVents.Contains(coordinate)) { }
-            else if (Vents.Contains(coordinate)) { DangerousVents.Add(coordinate); }
-            else { Vents.Add(coordinate); }
+            if (DangerousVents.TryGetValue((coordinate.X, coordinate.Y), out Coordinate _)) { }
+            else if (Vents.TryGetValue((coordinate.X, coordinate.Y), out Coordinate _)) { DangerousVents.Add((coordinate.X, coordinate.Y), coordinate); }
+            else { Vents.Add((coordinate.X, coordinate.Y), coordinate); }
         }
+
         public void AddVents(List<Coordinate> coordinates) {
             foreach (Coordinate c in coordinates) {
                 AddVent(c);
@@ -55,7 +40,6 @@ namespace AdventOfCode2021.Day05 {
 
         public int FindDangerousPointCount() {
             return DangerousVents.Count;
-            // return Vents.Where(v => v.Frequency > 1).Count();
         }
     }
 }
