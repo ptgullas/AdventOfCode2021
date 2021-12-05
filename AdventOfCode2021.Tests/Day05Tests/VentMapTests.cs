@@ -25,7 +25,9 @@ namespace AdventOfCode2021.Tests.Day05Tests {
                 lines.Add(new Line(str));
             }
 
-            VentMap ventMap = new(lines);
+            VentMap ventMap = new();
+
+            ventMap.AddVentsFromLines(lines);
 
             var result = ventMap.FindDangerousPointCount();
             Assert.Equal(expectedDangerousPointCount, result);

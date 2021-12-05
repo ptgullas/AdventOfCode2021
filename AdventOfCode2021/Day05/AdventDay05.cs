@@ -15,7 +15,9 @@ namespace AdventOfCode2021.Day05 {
                 lines.Add(new Line(str));
             }
             Console.WriteLine("Creating ventMap");
-            VentMap ventMap = new(lines);
+            VentMap ventMap = new();
+
+            ventMap.AddVentsFromLines(lines);
 
             int dangerousCount = ventMap.FindDangerousPointCount();
             Console.WriteLine($"There are {dangerousCount} dangerous points!");
