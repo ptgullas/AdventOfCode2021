@@ -27,5 +27,43 @@ namespace AdventOfCode2021.Tests.Day05Tests {
             Assert.Equal(expectedSecondCoordinateX, line.Coordinates[1].X);
             Assert.Equal(expectedSecondCoordinateY, line.Coordinates[1].Y);
         }
+
+        [Fact]
+        public void GetPointsCovered_Horizontal_Passes() {
+            string inputStr = "1,1 -> 1,3";
+            int expectedPointCount = 3;
+            Coordinate expectedPoint1 = new(1, 1);
+            Coordinate expectedPoint2 = new(1, 2);
+            Coordinate expectedPoint3 = new(1, 3);
+
+
+            Line line = new(inputStr);
+            var points = line.GetPointsCovered();
+
+            Assert.Equal(expectedPointCount, points.Count);
+            Assert.Contains<Coordinate>(expectedPoint1, points);
+            Assert.Contains<Coordinate>(expectedPoint2, points);
+            Assert.Contains<Coordinate>(expectedPoint3, points);
+
+        }
+
+        [Fact]
+        public void GetPointsCovered_Vertical_Passes() {
+            string inputStr = "9,7 -> 7,7";
+            int expectedPointCount = 3;
+            Coordinate expectedPoint1 = new(9, 7);
+            Coordinate expectedPoint2 = new(8, 7);
+            Coordinate expectedPoint3 = new(7, 7);
+
+
+            Line line = new(inputStr);
+            var points = line.GetPointsCovered();
+
+            Assert.Equal(expectedPointCount, points.Count);
+            Assert.Contains<Coordinate>(expectedPoint1, points);
+            Assert.Contains<Coordinate>(expectedPoint2, points);
+            Assert.Contains<Coordinate>(expectedPoint3, points);
+
+        }
     }
 }

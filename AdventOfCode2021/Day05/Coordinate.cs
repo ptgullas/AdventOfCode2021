@@ -5,9 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day05 {
-    public class Coordinate {
+    public record Coordinate {
         public int X { get; set; }
         public int Y { get; set; }
+
+        public Coordinate() {
+
+        }
 
         public Coordinate(int x, int y) {
             X = x;

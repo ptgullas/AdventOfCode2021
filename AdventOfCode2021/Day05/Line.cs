@@ -31,5 +31,29 @@ namespace AdventOfCode2021.Day05 {
             return Coordinates[0].X == Coordinates[1].X;
         }
 
+        public List<Coordinate> GetPointsCovered() {
+            List<Coordinate> pointsCovered = new();
+            if (IsHorizontal()) {
+                int largerX = Math.Max(Coordinates[0].X, Coordinates[1].X);
+                int smallerX = Math.Min(Coordinates[0].X, Coordinates[1].X);
+                int Y = Coordinates[0].Y;
+                for (int i = smallerX; i <= largerX; i++) {
+                    Coordinate c = new(i, Y);
+                    pointsCovered.Add(c);
+                }
+            }
+            else if (IsVertical()) {
+                int largerY = Math.Max(Coordinates[0].Y, Coordinates[1].Y);
+                int smallerY = Math.Min(Coordinates[0].Y, Coordinates[1].Y);
+
+                int X = Coordinates[0].X;
+                for (int i = smallerY; i <= largerY; i++) {
+                    Coordinate c = new(X, i);
+                    pointsCovered.Add(c);
+                }
+            }
+            return pointsCovered;
+        }
+
     }
 }
