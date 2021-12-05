@@ -19,7 +19,7 @@ namespace AdventOfCode2021.Tests.Day05Tests {
         [Fact]
         public static void FindDangerousPointCount_Passes() {
             var strings = GetSampleData();
-            int expectedDangerousPointCount = 5; 
+            int expectedDangerousPointCount = 12; 
             List<Line> lines = new();
             foreach (string str in strings) {
                 lines.Add(new Line(str));
